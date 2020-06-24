@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LYMG.OrbitVisualization", "LYMG.OrbitVisualization\LYMG.OrbitVisualization.csproj", "{441D55D5-5E52-44BF-A86C-9B0AD7626958}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LYMG.OrbitVisualization", "LYMG.OrbitVisualization\LYMG.OrbitVisualization.csproj", "{441D55D5-5E52-44BF-A86C-9B0AD7626958}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LYMG.GeoResources", "LYMG.GeoResources\LYMG.GeoResources.csproj", "{A77CB840-62E4-40CF-AA50-B1F4ED397C02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{441D55D5-5E52-44BF-A86C-9B0AD7626958}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{441D55D5-5E52-44BF-A86C-9B0AD7626958}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{441D55D5-5E52-44BF-A86C-9B0AD7626958}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A77CB840-62E4-40CF-AA50-B1F4ED397C02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A77CB840-62E4-40CF-AA50-B1F4ED397C02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A77CB840-62E4-40CF-AA50-B1F4ED397C02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A77CB840-62E4-40CF-AA50-B1F4ED397C02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
