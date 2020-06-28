@@ -2,6 +2,8 @@
 using Sky5.IO;
 using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -65,7 +67,18 @@ namespace LYMG.GeoResources.TileDownload
                         break;
                     }
                     var tile = DownloadQueue.Dequeue();
-                    await Provider.DownloadAsync(tile);
+                    for (int i = 0; i < 5; i++)
+                    {
+                        try
+                        {
+                            await Provider.DownloadAsync(tile);
+                            break;
+                        }
+                        catch (WebException ex)
+                        {
+                            await Task.Delay(1000 * i * 3000);
+                        }
+                    }
                     await Provider.Storage.InsertOneAsync(tile);
                 }
             }

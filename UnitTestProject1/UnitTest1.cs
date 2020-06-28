@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace UnitTestProject1
 {
@@ -28,7 +29,14 @@ namespace UnitTestProject1
             var db = client.GetDatabase("geo");
             var context = new WorkContext();
             var provider = new GoogleMap();
-            provider.Storage = db.GetCollection<BsonDocument>("googleTiles");
+            provider.Storage = db.GetCollection<BsonDocument>("googleTiles", new MongoCollectionSettings { AssignIdOnInsert = false });
+            if (!db.ListCollectionNames().ToEnumerable().Contains("googleTiles"))
+            {
+                var opt = new CreateCollectionOptions();
+                db.CreateCollection("googleTiles");
+                var ikd = Builders<BsonDocument>.IndexKeys.Ascending("x").Ascending("y").Ascending("z");
+                provider.Storage.Indexes.CreateOne(new CreateIndexModel<BsonDocument>(ikd));
+            }
             context.ParallelLimit = 5;
             context.Provider = provider;
             context.Changed();

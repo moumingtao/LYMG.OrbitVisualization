@@ -34,6 +34,7 @@ namespace LYMG.GeoResources.TileDownload.Providers
                 using (var stream = response.GetResponseStream())
                     await stream.ReadAsync(buffer, 0, buffer.Length);
                 tile["img"] = buffer;
+                tile["contentType"] = response.ContentType;
             }
         }
 
@@ -72,15 +73,22 @@ namespace LYMG.GeoResources.TileDownload.Providers
 
         IEnumerable<TileRectangularArea> Areas()
         {
-            for (int z = 0; z < 5; z++)
+            int z = 0;
+            while (z < 5)
             {
                 var w = 1 << z;
                 yield return new TileRectangularArea { BeginX = 0, BeginY = 0, CountX = w, CountY = w, Level = z };
+                z++;
             }
-            for (int z = 5; z < 15; z++)
+            while (z < 15)
             {
                 var count = 1 << (z - 5);
-
+                for (int x = 0; x < count; x++)
+                    for (int y = 0; y < count; y++)
+                    {
+                        yield return new TileRectangularArea { BeginX = x * count, BeginY = y * count, CountX = 1 << 5, CountY = 1 << 5, Level = z };
+                    }
+                z++;
             }
         }
     }
