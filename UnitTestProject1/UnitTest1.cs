@@ -37,7 +37,7 @@ namespace UnitTestProject1
                 var ikd = Builders<BsonDocument>.IndexKeys.Ascending("x").Ascending("y").Ascending("z");
                 provider.Storage.Indexes.CreateOne(new CreateIndexModel<BsonDocument>(ikd));
             }
-            context.ParallelLimit = 5;
+            context.ParallelLimit = 10;
             context.Provider = provider;
             context.Changed();
             context.SynchronizationContext.ProcessWorks();

@@ -9,7 +9,7 @@ namespace LYMG.GeoResources.TileDownload
 {
     public abstract class TileProvider
     {
-        internal protected abstract Task DownloadAsync(BsonDocument item);
+        internal protected abstract Task DownloadAsync(BsonDocument item, object worker);
         public IMongoCollection<BsonDocument> Storage;
 
         bool BeginEnqueueDownloadItemsIsRuning;
@@ -30,5 +30,6 @@ namespace LYMG.GeoResources.TileDownload
 
         protected abstract Task GenerateTask(Queue<BsonDocument> downloadQueue);
         public abstract bool GenerateIsEnded { get; }
+        internal protected abstract object GetWorkerTag();
     }
 }

@@ -53,6 +53,7 @@ namespace LYMG.GeoResources.TileDownload
             WorkerCount++;
             try
             {
+                var tag = Provider.GetWorkerTag();
                 while (WorkerCount <= parallelLimit)
                 {
                     if (DownloadQueue.Count <= QueueMinCount)
@@ -67,18 +68,7 @@ namespace LYMG.GeoResources.TileDownload
                         break;
                     }
                     var tile = DownloadQueue.Dequeue();
-                    for (int i = 0; i < 5; i++)
-                    {
-                        try
-                        {
-                            await Provider.DownloadAsync(tile);
-                            break;
-                        }
-                        catch (WebException ex)
-                        {
-                            await Task.Delay(1000 * i * 3000);
-                        }
-                    }
+                    await Provider.DownloadAsync(tile, tag);
                     await Provider.Storage.InsertOneAsync(tile);
                 }
             }

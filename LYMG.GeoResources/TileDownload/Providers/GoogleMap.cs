@@ -2,6 +2,8 @@
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,30 +13,47 @@ namespace LYMG.GeoResources.TileDownload.Providers
     // https://segmentfault.com/a/1190000016644921
     public class GoogleMap : TileProvider
     {
-        public string lyrs = "s";
-        public string gl = "CN";
-        public string hl = "zh-CN";
         private readonly IEnumerator<TileRectangularArea> AreaEnumerator;
 
         public override bool GenerateIsEnded => AreaEnumerator.Current == null;
+        Random random = new Random();
 
         public GoogleMap()
         {
             AreaEnumerator = Areas().GetEnumerator();
         }
 
-        internal protected async override Task DownloadAsync(BsonDocument tile)
+        internal protected async override Task DownloadAsync(BsonDocument tile, object worker)
         {
-            var request = (HttpWebRequest)WebRequest.Create($"https://mts1.google.com/vt/lyrs={tile["lyrs"]}&gl={tile["gl"]}&hl={tile["hl"]}&x={tile["x"]}&y={tile["y"]}&z={tile["z"]}");
-            request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36";
-            //request.Proxy = new WebProxy("127.0.0.1", 10808);
-            using (var response = await request.GetResponseAsync())
+            const int hostcount = 4;
+            int offset = random.Next(hostcount);
+            for (int i = 0; i < hostcount; i++)
             {
-                var buffer = new byte[response.ContentLength];
-                using (var stream = response.GetResponseStream())
-                    await stream.ReadAsync(buffer, 0, buffer.Length);
-                tile["img"] = buffer;
-                tile["contentType"] = response.ContentType;
+                var host = "khms" + (offset + i) % hostcount;
+                var request = (HttpWebRequest)WebRequest.Create($"https://{host}.google.com/kh/v=871?x={tile["x"]}&y={tile["y"]}&z={tile["z"]}");
+                request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36";
+                try
+                {
+                    using (var response = await request.GetResponseAsync())
+                    {
+                        var buffer = (MemoryStream)worker;
+                        buffer.Position = 0;
+                        using (var stream = response.GetResponseStream())
+                            await stream.CopyToAsync(buffer);
+                        tile["img"] = buffer.ToArray();
+                        tile["contentType"] = response.ContentType;
+                        tile["host"] = host;
+                    }
+                    break;
+                }
+                catch (WebException ex)
+                {
+                    tile["err"]= ex.Message;
+                    if (ex.Response is HttpWebResponse res && res.StatusCode == HttpStatusCode.NotFound)
+                        await Task.Yield();
+                    else
+                        await Task.Delay(1000 + i * 3000);
+                }
             }
         }
 
@@ -57,15 +76,9 @@ namespace LYMG.GeoResources.TileDownload.Providers
                 await Storage.Find(tile =>
                     tile["x"] >= area.BeginX && tile["x"] < area.BeginX + area.CountX &&
                     tile["y"] >= area.BeginY && tile["y"] < area.BeginY + area.CountY &&
-                    tile["z"] == area.Level && tile["lyrs"] == lyrs && tile["gl"] == gl && tile["hl"] == hl)
+                    tile["z"] == area.Level)
                     .Project(Builders<BsonDocument>.Projection.Include("x").Include("y").Include("z").Exclude("_id"))
                     .ForEachAsync(tile => tiles.Remove(tile));
-                foreach (var t in tiles)
-                {
-                    t["lyrs"] = lyrs;
-                    t["gl"] = gl;
-                    t["hl"] = hl;
-                }
                 foreach (var item in tiles) downloadQueue.Enqueue(item);
                 if (tiles.Count > 0) break;
             }
@@ -90,6 +103,11 @@ namespace LYMG.GeoResources.TileDownload.Providers
                     }
                 z++;
             }
+        }
+
+        protected internal override object GetWorkerTag()
+        {
+            return new MemoryStream();
         }
     }
 }
