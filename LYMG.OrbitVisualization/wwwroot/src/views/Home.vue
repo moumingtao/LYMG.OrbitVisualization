@@ -6,6 +6,16 @@
             </vc-layer-imagery>
             <vc-navigation :options="options"></vc-navigation>
         </vc-viewer>
+        <div style="position:fixed;left:2px;top:5px;">
+            <button type="button" class="cesium-button cesium-toolbar-button">å«æ˜Ÿ</button>
+            <button type="button" class="cesium-button cesium-toolbar-button">
+                <span class="icon fill-parent">
+                    233
+                </span>
+            </button>
+        </div>
+        <dv-border-box-1 style="position:fixed;width:28%;height:auto;top:2.4em;left:0;bottom:120px;"></dv-border-box-1>
+        <dv-border-box-4 style="position:fixed;width:40%;height:initial;top:350px;right:0;bottom:54px;" :reverse="true"></dv-border-box-4>
     </div>
 </template>
 <script>
@@ -14,15 +24,15 @@
         data() {
             return {
                 settings: {
-                    animation: true,// ÊÇ·ñÏÔÊ¾¶¯»­¿Ø¼ş
-                    fullscreenButton: true,// ÊÇ·ñÏÔÊ¾È«ÆÁÇĞ»»°´Å¥
-                    geocoder: true,// ÊÇ·ñÏÔÊ¾µØÀí±àÂëÆ÷ËÑË÷¿ò
-                    homeButton: true,// ÊÇ·ñÏÔÊ¾Ö÷Ò³°´Å¥
-                    sceneModePicker: true,//ÊÇ·ñÏÔÊ¾³¡¾°Ä£Ê½ÇĞ»»°´Å¥
-                    timeline: true,// ÊÇ·ñÏÔÊ¾Ê±¼äÖá¿Ø¼ş
-                    navigationHelpButton: true,//ÊÇ·ñÏÔÊ¾µ¼º½°ïÖú°´Å¥
-                    //scene3DOnly:true,// Èç¹ûÎªtrue£¬ÔòÃ¿¸ö¼¸ºÎÊµÀı½öÒÔ3DĞÎÊ½³ÊÏÖÒÔ½ÚÊ¡GPUÄÚ´æ¡£
-                    shadows: true,//È·¶¨ÒõÓ°ÊÇ·ñÓÉÌ«ÑôÍ¶ÉäĞÎ³É¡£
+                    animation: true,// æ˜¯å¦æ˜¾ç¤ºåŠ¨ç”»æ§ä»¶
+                    fullscreenButton: true,// æ˜¯å¦æ˜¾ç¤ºå…¨å±åˆ‡æ¢æŒ‰é’®
+                    geocoder: true,// æ˜¯å¦æ˜¾ç¤ºåœ°ç†ç¼–ç å™¨æœç´¢æ¡†
+                    homeButton: true,// æ˜¯å¦æ˜¾ç¤ºä¸»é¡µæŒ‰é’®
+                    sceneModePicker: true,//æ˜¯å¦æ˜¾ç¤ºåœºæ™¯æ¨¡å¼åˆ‡æ¢æŒ‰é’®
+                    timeline: true,// æ˜¯å¦æ˜¾ç¤ºæ—¶é—´è½´æ§ä»¶
+                    navigationHelpButton: true,//æ˜¯å¦æ˜¾ç¤ºå¯¼èˆªå¸®åŠ©æŒ‰é’®
+                    //scene3DOnly:true,// å¦‚æœä¸ºtrueï¼Œåˆ™æ¯ä¸ªå‡ ä½•å®ä¾‹ä»…ä»¥3Då½¢å¼å‘ˆç°ä»¥èŠ‚çœGPUå†…å­˜ã€‚
+                    shadows: true,//ç¡®å®šé˜´å½±æ˜¯å¦ç”±å¤ªé˜³æŠ•å°„å½¢æˆã€‚
                     projectionPicker:true,
                     logo:false,
                 },
@@ -34,12 +44,12 @@
                     enableCompassOuterRing: true,
                     enablePrintView: true,
                     enableMyLocation: {
-                        // Ê¹ÓÃ¸ßµÂapi¶¨Î»
+                        // ä½¿ç”¨é«˜å¾·apiå®šä½
                         amap: {
                             key: '42d22e6ed83f077bc28b7864718726de'
                         }
                     }
-                }
+                }, visible:true
             }
         }
     }
@@ -48,5 +58,8 @@
     .viewer {
         width: 100%;
         height: 100%;
+        color:#999;
     }
+    .viewer .el-tabs__item{color:#999}
+    .viewer .el-tabs__content{color:#999;}
 </style>
