@@ -8,4 +8,8 @@
     <Folder Include="wwwroot\src\modules\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="2.10.4" />
+  </ItemGroup>
+
 </Project>

@@ -1,7 +1,9 @@
 <template>
     <div class="viewer">
         <vc-viewer v-bind="settings">
-            <vc-layer-imagery></vc-layer-imagery>
+            <vc-layer-imagery>
+                <vc-provider-imagery-urltemplate url="https://localhost:44389/tile/googleTiles/?x={x}&y={y}&z={z}"></vc-provider-imagery-urltemplate>
+            </vc-layer-imagery>
             <vc-navigation :options="options"></vc-navigation>
         </vc-viewer>
     </div>

@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LYMG.OrbitVisualization", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LYMG.GeoResources", "LYMG.GeoResources\LYMG.GeoResources.csproj", "{A77CB840-62E4-40CF-AA50-B1F4ED397C02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{2CE8AFE4-A2E4-44CF-B298-41AC674E75CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{2CE8AFE4-A2E4-44CF-B298-41AC674E75CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{C754FFEC-B6BE-4336-8DFF-15396A965F9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{2CE8AFE4-A2E4-44CF-B298-41AC674E75CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CE8AFE4-A2E4-44CF-B298-41AC674E75CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CE8AFE4-A2E4-44CF-B298-41AC674E75CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C754FFEC-B6BE-4336-8DFF-15396A965F9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C754FFEC-B6BE-4336-8DFF-15396A965F9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C754FFEC-B6BE-4336-8DFF-15396A965F9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C754FFEC-B6BE-4336-8DFF-15396A965F9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
