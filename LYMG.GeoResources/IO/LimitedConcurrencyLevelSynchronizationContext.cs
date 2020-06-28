@@ -23,7 +23,8 @@ namespace Sky5.IO
 
         public override void Post(SendOrPostCallback d, object state)
         {
-            source.Post(new WorkItem { Callback = d, State = state });
+            if (Current == this) d(state);
+            else source.Post(new WorkItem { Callback = d, State = state });
         }
         public override void Send(SendOrPostCallback d, object state)
         {

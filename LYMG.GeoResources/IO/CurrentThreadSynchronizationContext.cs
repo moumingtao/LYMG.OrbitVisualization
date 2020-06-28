@@ -28,6 +28,7 @@ namespace Sky5.IO
         }
         public void ProcessWorks()
         {
+            SynchronizationContext.SetSynchronizationContext(this);
             while (true)
             {
                 WorkItem work;

@@ -1,4 +1,5 @@
-﻿using Sky5.IO;
+﻿using MongoDB.Bson;
+using Sky5.IO;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,14 +10,13 @@ namespace LYMG.GeoResources.TileDownload
 {
     public class WorkContext
     {
-        public TaskScheduler TaskScheduler = new LimitedConcurrencyLevelTaskScheduler(1);
-        public readonly Queue<DownloadTask> Tasks = new Queue<DownloadTask>();
+        public CurrentThreadSynchronizationContext SynchronizationContext = new CurrentThreadSynchronizationContext();
+        TaskCompletionSource<TileProvider> TaskCompletionSource;
 
         public TileProvider Provider;
-        protected Queue<TileItem> DownloadQueue = new Queue<TileItem>();
-        public int QueueMaxCount, QueueMinCount;
+        internal Queue<BsonDocument> DownloadQueue = new Queue<BsonDocument>();
+        public int QueueMinCount;
 
-        public IStorage Storage;
         int parallelLimit;
         public int ParallelLimit
         {
@@ -24,20 +24,23 @@ namespace LYMG.GeoResources.TileDownload
             set
             {
                 parallelLimit = value;
-                Trigger();
+                Changed();
             }
         }
         int triggerRuning;
-        public void Trigger()
+        public void Changed()
         {
-            if (TaskScheduler.Current != this.TaskScheduler)
+            if (System.Threading.SynchronizationContext.Current != this.SynchronizationContext)
             {
                 if (Interlocked.Exchange(ref triggerRuning, 1) == 0)
-                    new Task(Trigger).Start(TaskScheduler);
-                return;
+                    SynchronizationContext.Post(Changed, null);
             }
+            else Changed(null);
+        }
+        void Changed(object state)
+        {
             Interlocked.Exchange(ref triggerRuning, 0);
-            while (parallelLimit > WorkerCount)
+            for (int i = WorkerCount; i < parallelLimit; i++)
             {
                 RunWork();
             }
@@ -51,11 +54,19 @@ namespace LYMG.GeoResources.TileDownload
                 while (WorkerCount <= parallelLimit)
                 {
                     if (DownloadQueue.Count <= QueueMinCount)
-                        BeginEnqueueDownloadItems();
-                    if (DownloadQueue.Count == 0) break;
-                    var tile = DownloadQueue.Peek();
+                        Provider.BeginEnqueueDownloadItems(this);
+                    if (DownloadQueue.Count == 0)
+                    {
+                        if (Provider.GenerateIsEnded && TaskCompletionSource != null)
+                        {
+                            TaskCompletionSource.SetResult(Provider);
+                            TaskCompletionSource = null;
+                        }
+                        break;
+                    }
+                    var tile = DownloadQueue.Dequeue();
                     await Provider.DownloadAsync(tile);
-                    await Storage.SaveTileAsync(tile);
+                    await Provider.Storage.InsertOneAsync(tile);
                 }
             }
             finally
@@ -63,30 +74,13 @@ namespace LYMG.GeoResources.TileDownload
                 WorkerCount--;
             }
         }
-
-        long downloaded;
-        bool BeginEnqueueDownloadItemsIsRuning;
-        void BeginEnqueueDownloadItems()
+        public Task WorkTask
         {
-            if (BeginEnqueueDownloadItemsIsRuning) return;
-            if (Tasks.Count == 0) return;
-            BeginEnqueueDownloadItemsIsRuning = true;
-            try
+            get
             {
-                var task = Tasks.Peek();
-                var count = QueueMaxCount - QueueMinCount;
-                var x = downloaded % task.XCount;
-                if (x + count > task.XCount)
-                    count = (int)(task.XCount - x);
-                Storage.DeDuplication(x, downloaded / task.XCount, task.Z, count);
-                downloaded += count;
-                if (downloaded >= task.XCount * task.YCount)
-                    Tasks.Dequeue();
-                Trigger();
-            }
-            finally
-            {
-                BeginEnqueueDownloadItemsIsRuning = false;
+                if (TaskCompletionSource == null)
+                    TaskCompletionSource = new TaskCompletionSource<TileProvider>();
+                return TaskCompletionSource.Task;
             }
         }
     }

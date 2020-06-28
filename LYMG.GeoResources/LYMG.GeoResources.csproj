@@ -5,23 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="TileDownload\Providers\" />
     <Folder Include="TileDownload\Storages\" />
-    <Compile Include="D:\codes\gmap.net\GMap.NET.Core\GMap.NET.Projections\*" Link="GMap.NET.Projections\%(Filename)%(Extension)" />
-    <Compile Include="D:\codes\gmap.net\GMap.NET.Core\GMap.NET\*" Link="GMap.NET\%(Filename)%(Extension)" />
-    <Compile Include="D:\codes\gmap.net\GMap.NET.Core\GMap.NET.MapProviders\**" Link="GMap.NET.MapProviders\%(Filename)%(Extension)" />
-    <Compile Include="D:\codes\gmap.net\GMap.NET.Core\GMap.NET.Internals\*" Link="GMap.NET.Internals\%(Filename)%(Extension)" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="D:\codes\gmap.net\GMap.NET.Core\GMap.NET.Internals\Cache.cs" />
-    <Compile Remove="D:\codes\gmap.net\GMap.NET.Core\GMap.NET.Internals\Core.cs" />
-    <Compile Remove="D:\codes\gmap.net\GMap.NET.Core\GMap.NET.Internals\LoadTask.cs" />
-    <Compile Remove="D:\codes\gmap.net\GMap.NET.Core\GMap.NET.Internals\TileHttpHost.cs" />
-    <Compile Remove="D:\codes\gmap.net\GMap.NET.Core\GMap.NET\Delegates.cs" />
-    <Compile Remove="D:\codes\gmap.net\GMap.NET.Core\GMap.NET\GMaps.cs" />
-    <Compile Remove="D:\codes\gmap.net\GMap.NET.Core\GMap.NET\Interface.cs" />
-    <Compile Remove="D:\codes\gmap.net\GMap.NET.Core\GMap.NET\ZipStorer.cs" />
+    <PackageReference Include="MongoDB.Bson" Version="2.10.4" />
+    <PackageReference Include="MongoDB.Driver" Version="2.10.4" />
   </ItemGroup>
 
 </Project>
