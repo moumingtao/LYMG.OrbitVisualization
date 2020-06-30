@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LYMG.GeoResources", "LYMG.G
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{2CE8AFE4-A2E4-44CF-B298-41AC674E75CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{C754FFEC-B6BE-4336-8DFF-15396A965F9E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{C07BD327-17F7-4DF9-AA8E-A3D0557FCB73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LYMG.OrbitVisualization.Controller", "LYMG.OrbitVisualization.Controller\LYMG.OrbitVisualization.Controller.csproj", "{75B5E979-3509-4936-90E1-90C43B287DEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +31,10 @@ Global
 		{2CE8AFE4-A2E4-44CF-B298-41AC674E75CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CE8AFE4-A2E4-44CF-B298-41AC674E75CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CE8AFE4-A2E4-44CF-B298-41AC674E75CF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C754FFEC-B6BE-4336-8DFF-15396A965F9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C754FFEC-B6BE-4336-8DFF-15396A965F9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C754FFEC-B6BE-4336-8DFF-15396A965F9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C754FFEC-B6BE-4336-8DFF-15396A965F9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75B5E979-3509-4936-90E1-90C43B287DEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75B5E979-3509-4936-90E1-90C43B287DEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75B5E979-3509-4936-90E1-90C43B287DEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75B5E979-3509-4936-90E1-90C43B287DEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
