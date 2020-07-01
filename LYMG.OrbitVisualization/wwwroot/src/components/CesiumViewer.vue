@@ -8,7 +8,7 @@
     export default {
         props: {
             name: { type: String }
-        }, mounted() {
+        }, async mounted() {
             Cesium.buildModuleUrl.setBaseUrl('/Cesium/')
             this.viewer = new Cesium.Viewer(this.$refs.viewer);
             this.viewer._cesiumWidget._creditContainer.style.display = "none";
@@ -20,15 +20,16 @@
                 .withUrl("https://localhost:44389/cesiumHub/")
                 .build();
 
-            connection.on("messageReceived", (msg) => {
-                console.log(msg);
+            connection.on("SayHello", () => {
+                alert("Hello !");
             });
 
-            connection.start().catch(err => console.log(err));
-
+            await connection.start();
+            connection.send("ViewerEnter", this.name);
+            //connection.send("ViewerInvoke", this.name, "SayHello", "233");
         }, data() {
             return {
-                viewer:null
+                viewer: null
             }
         }
     }

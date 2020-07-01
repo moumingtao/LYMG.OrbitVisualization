@@ -23,7 +23,7 @@ namespace LYMG.OrbitVisualization
         public void Remove(string methodName)
             => Service.Connection.Remove(Name + "." + methodName);
 
-        public async Task<Process> Start(Mode mode = Mode.Nomal)
+        public async Task<Process> Start(Mode mode, string baseUrl)
         {
             var command = new StringBuilder();
 
@@ -34,12 +34,16 @@ namespace LYMG.OrbitVisualization
                 case Mode.Kiosk: command.Append("--kiosk "); break;
                 case Mode.App: command.Append("--app="); break;
             }
-            command.Append(Service.Host);
-            command.Append(@"Cesium\");
+            command.Append(baseUrl);
             command.Append(Name);
             #endregion
-
-            var process = Process.Start("Chrome", command.ToString());
+            var info = new ProcessStartInfo
+            {
+                FileName = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
+                Arguments = command.ToString(),
+                WorkingDirectory = @"C:\Program Files (x86)\Google\Chrome\Application",
+            };
+            var process = Process.Start(info);
             await Service.WaitViewer(Name);
             return process;
         }
@@ -50,5 +54,8 @@ namespace LYMG.OrbitVisualization
             Kiosk,
             App
         }
+
+        public Task Post(string method, params object[] args)
+            => Service.Connection.SendCoreAsync("ViewerInvoke", new object[] { Name, method, args });
     }
 }

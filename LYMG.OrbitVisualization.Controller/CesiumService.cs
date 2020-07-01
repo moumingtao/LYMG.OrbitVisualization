@@ -10,20 +10,22 @@ namespace LYMG.OrbitVisualization
     public class CesiumService
     {
         public readonly string Host;
-        public readonly HubConnection Connection;
-        public readonly List<CesiumViewerProxy> CesiumViewers = new List<CesiumViewerProxy>();
+        public HubConnection Connection { get; private set; }
 
         public CesiumService(string host)
         {
             this.Host = host;
+        }
+        public Task StartAsync()
+        {
             Connection = new HubConnectionBuilder()
-                .WithUrl(host + "/CesiumHub")
+                .WithUrl(Host + "/CesiumHub")
                 .Build();
             RegisterCallbacks();
+            return Connection.StartAsync();
         }
-
-        public IAsyncEnumerable<string> GetCesiumViewers(CancellationToken cancellationToken = default)
-            => Connection.StreamAsyncCore<string>("GetCesiumViewers", null, cancellationToken);
+        public Task<string[]> GetCesiumViewers(CancellationToken cancellationToken = default)
+            => Connection.InvokeCoreAsync<string[]>("GetViewers", Array.Empty<object>(), cancellationToken);
 
         public Task WaitViewer(string name, CancellationToken cancellationToken = default)
             => Connection.InvokeAsync("WaitViewer", name, cancellationToken);

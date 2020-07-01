@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestProject1", "UnitTes
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{C07BD327-17F7-4DF9-AA8E-A3D0557FCB73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LYMG.OrbitVisualization.Controller", "LYMG.OrbitVisualization.Controller\LYMG.OrbitVisualization.Controller.csproj", "{75B5E979-3509-4936-90E1-90C43B287DEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LYMG.OrbitVisualization.Controller", "LYMG.OrbitVisualization.Controller\LYMG.OrbitVisualization.Controller.csproj", "{75B5E979-3509-4936-90E1-90C43B287DEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

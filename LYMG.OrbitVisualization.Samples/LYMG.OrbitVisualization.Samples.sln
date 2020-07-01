@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormSample", "WindowsFormSample\WindowsFormSample.csproj", "{C8CD32FE-7DD2-42C8-A691-A01D5445F48E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LYMG.OrbitVisualization.Controller", "..\LYMG.OrbitVisualization.Controller\LYMG.OrbitVisualization.Controller.csproj", "{9F3F4C9C-8A1D-4866-9D5E-555CF1792FE0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C8CD32FE-7DD2-42C8-A691-A01D5445F48E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8CD32FE-7DD2-42C8-A691-A01D5445F48E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8CD32FE-7DD2-42C8-A691-A01D5445F48E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8CD32FE-7DD2-42C8-A691-A01D5445F48E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F3F4C9C-8A1D-4866-9D5E-555CF1792FE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F3F4C9C-8A1D-4866-9D5E-555CF1792FE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F3F4C9C-8A1D-4866-9D5E-555CF1792FE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F3F4C9C-8A1D-4866-9D5E-555CF1792FE0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A6F0F6C5-A13D-48D5-91CC-317FB2109EFE}
+	EndGlobalSection
+EndGlobal
