@@ -18,15 +18,15 @@ namespace LYMG.OrbitVisualization
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
             // ÆôÓÃ¿çÓò
-            services.AddCors(options => options.AddPolicy("any",
+            services.AddCors(options => options.AddPolicy("debugCors",
                 builder => builder
-                    //.AllowAnyOrigin()
-                    .WithOrigins("http://localhost:8080", "http://192.168.124.5:8080")
-                    //.WithMethods("GET", "DELETE", "HEAD", "POST", "PUT", "PATCH", "OPTIONS")
+                    .WithOrigins("http://localhost:8080", "ws://192.168.1.105:8080")
                     .AllowAnyMethod()
-                    .AllowAnyHeader()));
+                    .AllowAnyHeader()
+                    .AllowCredentials()));
+            services.AddControllers();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,12 +38,13 @@ namespace LYMG.OrbitVisualization
             }
 
             app.UseRouting();
-            app.UseCors("any");
-
+            app.UseCors("debugCors");
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapHub<Hubs.CesiumHub>("/cesiumHub").RequireCors("debugCors");
+                endpoints.MapControllers().RequireCors("debugCors");
             });
+            app.UseWebSockets();
         }
     }
 }

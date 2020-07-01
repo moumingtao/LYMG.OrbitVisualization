@@ -4,6 +4,7 @@
 <script>
     import * as Cesium from 'cesium/Build/Cesium/Cesium.js'
     import 'cesium/Build/Cesium/Widgets/widgets.css'
+    import * as signalR from "@microsoft/signalr";
     export default {
         props: {
             name: { type: String }
@@ -15,6 +16,16 @@
                 new Cesium.UrlTemplateImageryProvider({
                     url: "https://localhost:44389/tile/googleTiles/?x={x}&y={y}&z={z}"
                 }));
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("https://localhost:44389/cesiumHub/")
+                .build();
+
+            connection.on("messageReceived", (msg) => {
+                console.log(msg);
+            });
+
+            connection.start().catch(err => console.log(err));
+
         }, data() {
             return {
                 viewer:null
