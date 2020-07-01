@@ -2,7 +2,7 @@
     <div ref="viewer"></div>
 </template>
 <script>
-    import { Viewer, UrlTemplateImageryProvider } from 'cesium'
+    import * as Cesium from 'cesium/Build/Cesium/Cesium.js'
     import 'cesium/Build/Cesium/Widgets/widgets.css'
     export default {
         props: {
