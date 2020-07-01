@@ -30,9 +30,10 @@
         {
             this.btnOpenWebBrowser = new System.Windows.Forms.Button();
             this.btnConnect = new System.Windows.Forms.Button();
-            this.btnSayHello = new System.Windows.Forms.Button();
             this.btnGetCesiumViewers = new System.Windows.Forms.Button();
             this.btnWaitViewer = new System.Windows.Forms.Button();
+            this.btnPost = new System.Windows.Forms.Button();
+            this.txtMethod = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnOpenWebBrowser
@@ -55,19 +56,9 @@
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
-            // btnSayHello
-            // 
-            this.btnSayHello.Location = new System.Drawing.Point(13, 72);
-            this.btnSayHello.Name = "btnSayHello";
-            this.btnSayHello.Size = new System.Drawing.Size(75, 23);
-            this.btnSayHello.TabIndex = 2;
-            this.btnSayHello.Text = "Say Hello";
-            this.btnSayHello.UseVisualStyleBackColor = true;
-            this.btnSayHello.Click += new System.EventHandler(this.btnSayHello_Click);
-            // 
             // btnGetCesiumViewers
             // 
-            this.btnGetCesiumViewers.Location = new System.Drawing.Point(13, 102);
+            this.btnGetCesiumViewers.Location = new System.Drawing.Point(12, 71);
             this.btnGetCesiumViewers.Name = "btnGetCesiumViewers";
             this.btnGetCesiumViewers.Size = new System.Drawing.Size(105, 23);
             this.btnGetCesiumViewers.TabIndex = 3;
@@ -77,7 +68,7 @@
             // 
             // btnWaitViewer
             // 
-            this.btnWaitViewer.Location = new System.Drawing.Point(13, 132);
+            this.btnWaitViewer.Location = new System.Drawing.Point(123, 71);
             this.btnWaitViewer.Name = "btnWaitViewer";
             this.btnWaitViewer.Size = new System.Drawing.Size(112, 23);
             this.btnWaitViewer.TabIndex = 4;
@@ -85,19 +76,39 @@
             this.btnWaitViewer.UseVisualStyleBackColor = true;
             this.btnWaitViewer.Click += new System.EventHandler(this.btnWaitViewer_Click);
             // 
+            // btnPost
+            // 
+            this.btnPost.Location = new System.Drawing.Point(244, 42);
+            this.btnPost.Name = "btnPost";
+            this.btnPost.Size = new System.Drawing.Size(75, 23);
+            this.btnPost.TabIndex = 5;
+            this.btnPost.Text = "Post";
+            this.btnPost.UseVisualStyleBackColor = true;
+            this.btnPost.Click += new System.EventHandler(this.btnPost_Click);
+            // 
+            // txtMethod
+            // 
+            this.txtMethod.Location = new System.Drawing.Point(94, 44);
+            this.txtMethod.Name = "txtMethod";
+            this.txtMethod.Size = new System.Drawing.Size(144, 21);
+            this.txtMethod.TabIndex = 6;
+            this.txtMethod.Text = "Close";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(691, 370);
+            this.Controls.Add(this.txtMethod);
+            this.Controls.Add(this.btnPost);
             this.Controls.Add(this.btnWaitViewer);
             this.Controls.Add(this.btnGetCesiumViewers);
-            this.Controls.Add(this.btnSayHello);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.btnOpenWebBrowser);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -105,9 +116,10 @@
 
         private System.Windows.Forms.Button btnOpenWebBrowser;
         private System.Windows.Forms.Button btnConnect;
-        private System.Windows.Forms.Button btnSayHello;
         private System.Windows.Forms.Button btnGetCesiumViewers;
         private System.Windows.Forms.Button btnWaitViewer;
+        private System.Windows.Forms.Button btnPost;
+        private System.Windows.Forms.TextBox txtMethod;
     }
 }
 

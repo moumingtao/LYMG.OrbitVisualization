@@ -37,9 +37,9 @@ namespace LYMG.OrbitVisualization.Hubs
             if (Context.Items.TryGetValue("Viewer", out var value) && value is ViewerInfo viewer)
                 lock (viewer)
                 {
+                    viewer.ConnectionId = null;
                     if (viewer.IsEmpty)
                         Viewers.TryRemove(viewer.Name, out _);
-                    else viewer.ConnectionId = null;
                 }
             return base.OnDisconnectedAsync(exception);
         }

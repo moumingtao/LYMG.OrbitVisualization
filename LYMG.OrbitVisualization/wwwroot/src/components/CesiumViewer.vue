@@ -20,13 +20,10 @@
                 .withUrl("https://localhost:44389/cesiumHub/")
                 .build();
 
-            connection.on("SayHello", () => {
-                alert("Hello !");
-            });
+            connection.on("Close", () => window.close());
 
             await connection.start();
             connection.send("ViewerEnter", this.name);
-            //connection.send("ViewerInvoke", this.name, "SayHello", "233");
         }, data() {
             return {
                 viewer: null

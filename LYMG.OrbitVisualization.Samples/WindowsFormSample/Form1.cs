@@ -33,16 +33,10 @@ namespace WindowsFormSample
 
         private async void btnOpenWebBrowser_Click(object sender, EventArgs e)
         {
+            btnOpenWebBrowser.Enabled = false;
             ChromeProcess = await CesiumViewerProxy.Start(CesiumViewerProxy.Mode.App, "http://localhost:8080/#/Cesium/");
             //btnOpenWebBrowser.Text = ChromeProcess.ProcessName;
-        }
-
-        private async void btnSayHello_Click(object sender, EventArgs e)
-        {
-            var ctrl = (Control)sender;
-            ctrl.Enabled = false;
-            await CesiumViewerProxy.Post("SayHello", 233);
-            ctrl.Enabled = true;
+            btnOpenWebBrowser.Enabled = true;
         }
 
         private async void btnGetCesiumViewers_Click(object sender, EventArgs e)
@@ -55,6 +49,11 @@ namespace WindowsFormSample
         {
             await CesiumService.WaitViewer("233");
             btnWaitViewer.Text = "Ok";
+        }
+
+        private void btnPost_Click(object sender, EventArgs e)
+        {
+            CesiumViewerProxy.Post(txtMethod.Text);
         }
     }
 }
