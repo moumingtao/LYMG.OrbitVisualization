@@ -51,14 +51,31 @@ namespace LYMG.OrbitVisualization.Hubs
         }
         #endregion
 
-        public void ViewerInvoke(string name, string method, object[] args)
+        #region 调用代理
+        public Task ViewerEvalProxy(string name, string script, object[] args)
         {
-            if (Viewers.TryGetValue(name, out var viewer))
+            return Viewers[name].SendCoreAsync(Clients, "eval", new object[] { null, script, args });
+        }
+        public async Task<object> ViewerEvalWithResultProxy(string name, string script, object[] args)
+        {
+            var cid = "cmd:" + Guid.NewGuid();
+            try
             {
-                var cid = viewer.ConnectionId;
-                if (cid != null)
-                    Clients.Client(cid).SendCoreAsync(method, args);
+                var source = new TaskCompletionSource<object>();
+                Context.Items[cid] = source;
+                await Viewers[name].SendCoreAsync(Clients, "eval", new object[] { cid, script, args });
+                return await source.Task;
+            }
+            finally
+            {
+                Context.Items.Remove(cid);
             }
         }
+        public void ViewerResponse(string cid, object res)
+        {
+            var source = (TaskCompletionSource<object>)Context.Items[cid];
+            source.SetResult(res);
+        }
+        #endregion
     }
 }

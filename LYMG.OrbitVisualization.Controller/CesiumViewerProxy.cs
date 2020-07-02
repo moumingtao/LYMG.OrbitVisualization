@@ -55,7 +55,9 @@ namespace LYMG.OrbitVisualization
             App
         }
 
-        public Task Post(string method, params object[] args)
-            => Service.Connection.SendCoreAsync("ViewerInvoke", new object[] { Name, method, args });
+        public Task ViewerEvalAsync(string script, params object[] args)
+            => Service.Connection.SendCoreAsync("ViewerEvalProxy", new object[] { Name, script, args });
+        public async Task<T> ViewerEvalAsync<T>(string script, params object[] args)
+            => (T)await Service.Connection.InvokeCoreAsync("ViewerEvalWithResultProxy", typeof(T), new object[] { Name, script, args });
     }
 }

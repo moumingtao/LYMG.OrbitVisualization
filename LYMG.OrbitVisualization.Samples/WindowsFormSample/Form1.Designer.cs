@@ -34,6 +34,7 @@
             this.btnWaitViewer = new System.Windows.Forms.Button();
             this.btnPost = new System.Windows.Forms.Button();
             this.txtMethod = new System.Windows.Forms.TextBox();
+            this.btnEvalWhithResult = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnOpenWebBrowser
@@ -58,7 +59,7 @@
             // 
             // btnGetCesiumViewers
             // 
-            this.btnGetCesiumViewers.Location = new System.Drawing.Point(12, 71);
+            this.btnGetCesiumViewers.Location = new System.Drawing.Point(94, 12);
             this.btnGetCesiumViewers.Name = "btnGetCesiumViewers";
             this.btnGetCesiumViewers.Size = new System.Drawing.Size(105, 23);
             this.btnGetCesiumViewers.TabIndex = 3;
@@ -68,7 +69,7 @@
             // 
             // btnWaitViewer
             // 
-            this.btnWaitViewer.Location = new System.Drawing.Point(123, 71);
+            this.btnWaitViewer.Location = new System.Drawing.Point(205, 12);
             this.btnWaitViewer.Name = "btnWaitViewer";
             this.btnWaitViewer.Size = new System.Drawing.Size(112, 23);
             this.btnWaitViewer.TabIndex = 4;
@@ -82,7 +83,7 @@
             this.btnPost.Name = "btnPost";
             this.btnPost.Size = new System.Drawing.Size(75, 23);
             this.btnPost.TabIndex = 5;
-            this.btnPost.Text = "Post";
+            this.btnPost.Text = "执行无返回值";
             this.btnPost.UseVisualStyleBackColor = true;
             this.btnPost.Click += new System.EventHandler(this.btnPost_Click);
             // 
@@ -94,11 +95,21 @@
             this.txtMethod.TabIndex = 6;
             this.txtMethod.Text = "Close";
             // 
+            // btnEvalWhithResult
+            // 
+            this.btnEvalWhithResult.Location = new System.Drawing.Point(242, 71);
+            this.btnEvalWhithResult.Name = "btnEvalWhithResult";
+            this.btnEvalWhithResult.Size = new System.Drawing.Size(75, 23);
+            this.btnEvalWhithResult.TabIndex = 7;
+            this.btnEvalWhithResult.Text = "获取返回值";
+            this.btnEvalWhithResult.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(691, 370);
+            this.Controls.Add(this.btnEvalWhithResult);
             this.Controls.Add(this.txtMethod);
             this.Controls.Add(this.btnPost);
             this.Controls.Add(this.btnWaitViewer);
@@ -120,6 +131,7 @@
         private System.Windows.Forms.Button btnWaitViewer;
         private System.Windows.Forms.Button btnPost;
         private System.Windows.Forms.TextBox txtMethod;
+        private System.Windows.Forms.Button btnEvalWhithResult;
     }
 }
 

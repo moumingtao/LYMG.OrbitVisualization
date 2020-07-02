@@ -26,7 +26,7 @@ namespace WindowsFormSample
         private async void btnConnect_Click(object sender, EventArgs e)
         {
             CesiumService = new CesiumService("https://localhost:44389");
-            CesiumViewerProxy = new CesiumViewerProxy("345", CesiumService);
+            CesiumViewerProxy = new CesiumViewerProxy("233", CesiumService);
             await CesiumService.StartAsync();
             btnConnect.Text = "连接成功";
         }
@@ -53,7 +53,7 @@ namespace WindowsFormSample
 
         private void btnPost_Click(object sender, EventArgs e)
         {
-            CesiumViewerProxy.Post(txtMethod.Text);
+            CesiumViewerProxy.ViewerEvalAsync(txtMethod.Text);
         }
     }
 }

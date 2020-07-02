@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.SignalR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,6 +34,14 @@ namespace LYMG.OrbitVisualization.Hubs
             if (ConnectionCompletionSource == null)
                 ConnectionCompletionSource = new TaskCompletionSource<string>();
             return ConnectionCompletionSource.Task;
+        }
+
+        internal Task SendCoreAsync(IHubCallerClients clients, string method, object[] args)
+        {
+            var cid = connectionId;
+            if (cid != null)
+                return clients.Client(cid).SendCoreAsync(method, args);
+            return null;
         }
     }
 }

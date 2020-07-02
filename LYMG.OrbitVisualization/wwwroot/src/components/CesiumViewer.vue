@@ -8,7 +8,7 @@
     export default {
         props: {
             name: { type: String }
-        }, async mounted() {
+        }, mounted() {
             Cesium.buildModuleUrl.setBaseUrl('/Cesium/')
             this.viewer = new Cesium.Viewer(this.$refs.viewer);
             this.viewer._cesiumWidget._creditContainer.style.display = "none";
@@ -16,17 +16,29 @@
                 new Cesium.UrlTemplateImageryProvider({
                     url: "https://localhost:44389/tile/googleTiles/?x={x}&y={y}&z={z}"
                 }));
-            const connection = new signalR.HubConnectionBuilder()
-                .withUrl("https://localhost:44389/cesiumHub/")
-                .build();
-
-            connection.on("Close", () => window.close());
-
-            await connection.start();
-            connection.send("ViewerEnter", this.name);
+            this.connectSignalR();
         }, data() {
             return {
-                viewer: null
+                viewer: null,
+                connection: null,
+            }
+        }, methods: {
+            async connectSignalR() {
+                this.connection = new signalR.HubConnectionBuilder()
+                    .withUrl("https://localhost:44389/cesiumHub/")
+                    .build();
+                this.connection.on("eval", this.onEval);
+                await this.connection.start();
+                this.connection.send("ViewerEnter", this.name);
+            }, onEval(cid, script, gs) {// SignalR远程调用
+                var ret = window.eval(script);
+                if (cid) {
+                    if (ret && ret.then)
+                        ret.then(res => this.connection.send("ViewerResponse", cid, res));
+                    else
+                        this.connection.send("ViewerResponse", cid, ret);
+                }
+                if (gs) { return; }
             }
         }
     }
