@@ -1,12 +1,14 @@
 ﻿<template>
     <nav>
         <SignalR></SignalR>
+        <ViewerSetting></ViewerSetting>
     </nav>
 </template>
 <script>
     import SignalR from "./Tools/SignalR.vue"
+    import ViewerSetting from "./Tools/ViewerSetting.vue"
     export default {
-        components: { SignalR }
+        components: { SignalR, ViewerSetting }
     }
 </script>
 <style scoped>

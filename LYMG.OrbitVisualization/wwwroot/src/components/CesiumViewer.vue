@@ -1,38 +1,37 @@
 ﻿<template>
     <div>
-        <div ref="viewer"></div>
         <TopLeftToolBar></TopLeftToolBar>
     </div>
 </template>
 <script>
     import * as Cesium from 'cesium/Build/Cesium/Cesium.js'
     import 'cesium/Build/Cesium/Widgets/widgets.css'
-    import TopRightToolBarExtend from "./TopRightToolBarExtend.vue"
     import TopLeftToolBar from "./TopLeftToolBar.vue"
-    import Vue from 'vue'
+    import cesiumZH from '@/modules/CesiumZH'
+
     export default {
         props: {
             name: { type: String }
         }, components: {
             TopLeftToolBar
-        }, async mounted() {
-            Cesium.buildModuleUrl.setBaseUrl('/Cesium/')
-            this.viewer = new Cesium.Viewer(this.$refs.viewer);
-
-            // 扩展工具栏
-            var span = document.createElement("span");
-            var toolbarExt = new Vue({
-                render: h => h(TopRightToolBarExtend)
-            }).$mount(span)
-            this.$refs.viewer
-                .getElementsByClassName("cesium-navigationHelpButton-wrapper")[0]
-                .before(toolbarExt.$el);
+        }, mounted() {
+            this.$el.insertBefore(this.viewerContainer, this.$el.children[0]);
+            cesiumZH(this.$el);
         }, data() {
             return {
                 viewer: null,
+                viewerContainer: null,
             }
         }, provide() {
-            return { "cesiumVue":this, }
+            if (!this.viewer) {
+                Cesium.buildModuleUrl.setBaseUrl('/Cesium/')
+                var div = document.createElement("div")
+                div.style.setProperty("width", "100%")
+                div.style.setProperty("height", "100%")
+                this.viewer = new Cesium.Viewer(div);
+                this.viewerContainer = div;
+            }
+            return { "cesiumVue": this, }
         }
     }
 </script>
