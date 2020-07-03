@@ -5,6 +5,8 @@
     import * as Cesium from 'cesium/Build/Cesium/Cesium.js'
     import 'cesium/Build/Cesium/Widgets/widgets.css'
     import * as signalR from "@microsoft/signalr";
+    import ToolBar from "./CesiumViewerRightToolBar.vue"
+    import Vue from 'vue'
     export default {
         props: {
             name: { type: String }
@@ -16,6 +18,15 @@
                 new Cesium.UrlTemplateImageryProvider({
                     url: "https://localhost:44389/tile/googleTiles?x={x}&y={y}&z={z}"
                 }));
+
+            // 扩展工具栏
+            var span = document.createElement("span");
+            var toolbarExt = new Vue({
+                render: h => h(ToolBar)
+            }).$mount(span)
+            this.$refs.viewer.getElementsByClassName("cesium-navigationHelpButton-wrapper")[0].before(toolbarExt.$el);
+
+            // 连接SignalR
             this.connectSignalR();
         }, data() {
             return {
