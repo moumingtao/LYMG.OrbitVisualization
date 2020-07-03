@@ -9,39 +9,31 @@ namespace LYMG.OrbitVisualization.Hubs
     public class ViewerInfo
     {
         public string Name;
-        string connectionId;
-        public string ConnectionId
+        HubCallerContext context;
+        public HubCallerContext Context
         {
-            get => connectionId;
+            get => context;
             set
             {
-                if (connectionId == value) return;
-                connectionId = value;
+                if (context == value) return;
+                context = value;
                 if (value != null && ConnectionCompletionSource != null)
                 {
-                    ConnectionCompletionSource.TrySetResult(value);
+                    ConnectionCompletionSource.TrySetResult(value.ConnectionId);
                     ConnectionCompletionSource = null;
                 }
             }
         }
         TaskCompletionSource<string> ConnectionCompletionSource;
 
-        public bool IsEmpty => ConnectionId == null && ConnectionCompletionSource == null;
+        public bool IsEmpty => Context == null && ConnectionCompletionSource == null;
 
         public Task<string> WaitConnectionAsync()
         {
-            if (connectionId != null) return Task.FromResult(connectionId);
+            if (context != null) return Task.FromResult(context.ConnectionId);
             if (ConnectionCompletionSource == null)
                 ConnectionCompletionSource = new TaskCompletionSource<string>();
             return ConnectionCompletionSource.Task;
-        }
-
-        internal Task SendCoreAsync(IHubCallerClients clients, string method, object[] args)
-        {
-            var cid = connectionId;
-            if (cid != null)
-                return clients.Client(cid).SendCoreAsync(method, args);
-            return null;
         }
     }
 }

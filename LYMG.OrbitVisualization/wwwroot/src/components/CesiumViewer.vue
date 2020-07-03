@@ -8,30 +8,31 @@
     export default {
         props: {
             name: { type: String }
-        }, mounted() {
+        }, async mounted() {
             Cesium.buildModuleUrl.setBaseUrl('/Cesium/')
             this.viewer = new Cesium.Viewer(this.$refs.viewer);
             this.viewer._cesiumWidget._creditContainer.style.display = "none";
             this.viewer.imageryLayers.addImageryProvider(
                 new Cesium.UrlTemplateImageryProvider({
-                    url: "https://localhost:44389/tile/googleTiles/?x={x}&y={y}&z={z}"
+                    url: "https://localhost:44389/tile/googleTiles?x={x}&y={y}&z={z}"
                 }));
             this.connectSignalR();
         }, data() {
             return {
                 viewer: null,
                 connection: null,
+                enterMessage: null,
             }
         }, methods: {
             async connectSignalR() {
                 this.connection = new signalR.HubConnectionBuilder()
                     .withUrl("https://localhost:44389/cesiumHub/")
                     .build();
-                this.connection.on("eval", this.onEval);
+                this.connection.on("eval", this.onEval.bind(this));
                 await this.connection.start();
                 this.connection.send("ViewerEnter", this.name);
             }, onEval(cid, script, gs) {// SignalR远程调用
-                var ret = window.eval(script);
+                var ret = eval(script);
                 if (cid) {
                     if (ret && ret.then)
                         ret.then(res => this.connection.send("ViewerResponse", cid, res));

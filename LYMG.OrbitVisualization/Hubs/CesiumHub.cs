@@ -17,19 +17,27 @@ namespace LYMG.OrbitVisualization.Hubs
         static ConcurrentDictionary<string, ViewerInfo> Viewers = new ConcurrentDictionary<string, ViewerInfo>();
         ViewerInfo GetOrAddViewer(string name) => Viewers.GetOrAdd(name, CreateViewer);
         ViewerInfo CreateViewer(string name) => new ViewerInfo { Name = name };
-        public void ViewerEnter(string name)
+        public bool ViewerEnter(string name)
         {
-            var viewer = GetOrAddViewer(name);
+            if(Viewers.TryGetValue(name, out var viewer))
+                lock (viewer)
+                {
+                    if (viewer.Context != null && viewer.Context.ConnectionId != Context.ConnectionId)
+                        return false;
+                }
+            else
+                viewer = GetOrAddViewer(name);
             lock (viewer)
-                viewer.ConnectionId = Context.ConnectionId;
+                viewer.Context = Context;
             Context.Items["Viewer"] = viewer;
+            return true;
         }
         public ICollection<string> GetViewers() => Viewers.Keys;
         public override Task OnConnectedAsync()
         {
             if (Context.Items.TryGetValue("Viewer", out var value) && value is ViewerInfo viewer)
                 lock (viewer)
-                    viewer.ConnectionId = Context.ConnectionId;
+                    viewer.Context = Context;
             return base.OnConnectedAsync();
         }
         public override Task OnDisconnectedAsync(Exception exception)
@@ -37,7 +45,7 @@ namespace LYMG.OrbitVisualization.Hubs
             if (Context.Items.TryGetValue("Viewer", out var value) && value is ViewerInfo viewer)
                 lock (viewer)
                 {
-                    viewer.ConnectionId = null;
+                    viewer.Context = null;
                     if (viewer.IsEmpty)
                         Viewers.TryRemove(viewer.Name, out _);
                 }
@@ -54,16 +62,17 @@ namespace LYMG.OrbitVisualization.Hubs
         #region 调用代理
         public Task ViewerEvalProxy(string name, string script, object[] args)
         {
-            return Viewers[name].SendCoreAsync(Clients, "eval", new object[] { null, script, args });
+            return Clients.Client(Viewers[name].Context.ConnectionId).SendCoreAsync("eval", new object[] { null, script, args });
         }
         public async Task<object> ViewerEvalWithResultProxy(string name, string script, object[] args)
         {
-            var cid = "cmd:" + Guid.NewGuid();
+            var cid = "cmd:" + Guid.NewGuid().ToString("N");
             try
             {
+                var viewer = Viewers[name];
                 var source = new TaskCompletionSource<object>();
-                Context.Items[cid] = source;
-                await Viewers[name].SendCoreAsync(Clients, "eval", new object[] { cid, script, args });
+                viewer.Context.Items[cid] = source;
+                await Clients.Client(viewer.Context.ConnectionId).SendCoreAsync("eval", new object[] { cid, script, args });
                 return await source.Task;
             }
             finally

@@ -55,5 +55,12 @@ namespace WindowsFormSample
         {
             CesiumViewerProxy.ViewerEvalAsync(txtMethod.Text);
         }
+
+        private async void btnEvalWhithResult_Click(object sender, EventArgs e)
+        {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            var ret = await CesiumViewerProxy.ViewerEvalAsync<object>(txtScript.Text);
+            txtResult.Text = $"{stopwatch.ElapsedMilliseconds}ms\r\n{ret}";
+        }
     }
 }

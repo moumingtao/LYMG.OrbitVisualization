@@ -35,6 +35,8 @@
             this.btnPost = new System.Windows.Forms.Button();
             this.txtMethod = new System.Windows.Forms.TextBox();
             this.btnEvalWhithResult = new System.Windows.Forms.Button();
+            this.txtScript = new System.Windows.Forms.TextBox();
+            this.txtResult = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnOpenWebBrowser
@@ -93,22 +95,41 @@
             this.txtMethod.Name = "txtMethod";
             this.txtMethod.Size = new System.Drawing.Size(144, 21);
             this.txtMethod.TabIndex = 6;
-            this.txtMethod.Text = "Close";
+            this.txtMethod.Text = "console.log(this)";
             // 
             // btnEvalWhithResult
             // 
             this.btnEvalWhithResult.Location = new System.Drawing.Point(242, 71);
             this.btnEvalWhithResult.Name = "btnEvalWhithResult";
-            this.btnEvalWhithResult.Size = new System.Drawing.Size(75, 23);
+            this.btnEvalWhithResult.Size = new System.Drawing.Size(77, 23);
             this.btnEvalWhithResult.TabIndex = 7;
             this.btnEvalWhithResult.Text = "获取返回值";
             this.btnEvalWhithResult.UseVisualStyleBackColor = true;
+            this.btnEvalWhithResult.Click += new System.EventHandler(this.btnEvalWhithResult_Click);
+            // 
+            // txtScript
+            // 
+            this.txtScript.Location = new System.Drawing.Point(13, 72);
+            this.txtScript.Name = "txtScript";
+            this.txtScript.Size = new System.Drawing.Size(223, 21);
+            this.txtScript.TabIndex = 8;
+            this.txtScript.Text = "this.viewer.camera.right";
+            // 
+            // txtResult
+            // 
+            this.txtResult.Location = new System.Drawing.Point(13, 100);
+            this.txtResult.Multiline = true;
+            this.txtResult.Name = "txtResult";
+            this.txtResult.Size = new System.Drawing.Size(306, 70);
+            this.txtResult.TabIndex = 9;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(691, 370);
+            this.ClientSize = new System.Drawing.Size(330, 216);
+            this.Controls.Add(this.txtResult);
+            this.Controls.Add(this.txtScript);
             this.Controls.Add(this.btnEvalWhithResult);
             this.Controls.Add(this.txtMethod);
             this.Controls.Add(this.btnPost);
@@ -132,6 +153,8 @@
         private System.Windows.Forms.Button btnPost;
         private System.Windows.Forms.TextBox txtMethod;
         private System.Windows.Forms.Button btnEvalWhithResult;
+        private System.Windows.Forms.TextBox txtScript;
+        private System.Windows.Forms.TextBox txtResult;
     }
 }
 
