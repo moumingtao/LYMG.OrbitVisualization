@@ -7,6 +7,10 @@ const routes = [
     {
         path: '/cesium/:name',
         component: () => import('@/views/Cesium.vue')
+    },
+    {
+        path: '/Home',
+        component: () => import('@/views/Home.vue')
     }
 ]
 
