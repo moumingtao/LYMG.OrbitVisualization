@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{C07B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LYMG.OrbitVisualization.Controller", "LYMG.OrbitVisualization.Controller\LYMG.OrbitVisualization.Controller.csproj", "{75B5E979-3509-4936-90E1-90C43B287DEF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LYMG.RealTimeEntity", "LYMG.RealTimeEntity\LYMG.RealTimeEntity.csproj", "{EAEBCA75-FF68-445D-9839-ECD749D8B958}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{75B5E979-3509-4936-90E1-90C43B287DEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75B5E979-3509-4936-90E1-90C43B287DEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75B5E979-3509-4936-90E1-90C43B287DEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAEBCA75-FF68-445D-9839-ECD749D8B958}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAEBCA75-FF68-445D-9839-ECD749D8B958}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAEBCA75-FF68-445D-9839-ECD749D8B958}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAEBCA75-FF68-445D-9839-ECD749D8B958}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
