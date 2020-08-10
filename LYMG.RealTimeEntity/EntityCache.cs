@@ -157,8 +157,8 @@ namespace LYMG.RealTimeEntity
                 {
                     var old = e;
                     e = e.Next;
-                    old.OnContextChanged(this, true);
                     Count--;
+                    old.OnContextChanged(this, true);
                     return old;
                 }
                 if (e.ID > id) return null;
@@ -181,15 +181,19 @@ namespace LYMG.RealTimeEntity
             }
         }
 
-        public void Clear(TimeSpan timeout)
+        public void ClearExpired(TimeSpan timeout)
         {
             if (Buckets == null) return;
-            var now = DateTime.Now;
+            var time = DateTime.Now - timeout;
             for (int i = 0; i < Buckets.Length; i++)
             {
                 for (ref var e = ref Buckets[i]; e != null; e = e.Next)
                 {
-                    now-EntityBase.startTime
+                    if (e.IsExpire(time))
+                    {
+                        e = e.Next;
+                        Count--;
+                    }
                 }
             }
         }

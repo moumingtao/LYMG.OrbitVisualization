@@ -24,6 +24,8 @@ namespace LYMG.RealTimeEntity
             else
                 Visit();
         }
+
+        internal bool IsExpire(DateTime time) => (time - startTime).TotalSeconds > LastVisitTime;
         #endregion
 
 
