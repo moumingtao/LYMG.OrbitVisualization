@@ -15,9 +15,7 @@ namespace LYMG.RealTimeEntity
 
         public EntityBase Replace(EntityBase entity)
         {
-            var index = entity.ID.GetHashCode() % Buckets.Length;
-
-            ref EntityBase e = ref Buckets[index];
+            ref EntityBase e = ref RefBucket(entity.ID);
 
             while (e != null)
             {
@@ -40,9 +38,7 @@ namespace LYMG.RealTimeEntity
 
         public EntityBase AddOrReplace(EntityBase entity)
         {
-            var index = entity.ID.GetHashCode() % Buckets.Length;
-
-            ref EntityBase e = ref Buckets[index];
+            ref EntityBase e = ref RefBucket(entity.ID);
 
             while (e != null)
             {
@@ -72,12 +68,15 @@ namespace LYMG.RealTimeEntity
             entity.OnContextChanged(this, false);
             return null;
         }
-
+        ref EntityBase RefBucket(ObjectId id)
+        {
+            var hash = (uint)id.GetHashCode();
+            var idx = (int)(hash % Buckets.Length);
+            return ref Buckets[idx];
+        }
         public void Add(EntityBase entity)
         {
-            var index = entity.ID.GetHashCode() % Buckets.Length;
-
-            ref EntityBase e = ref Buckets[index];
+            ref EntityBase e = ref RefBucket(entity.ID);
 
             while (e != null)
             {
@@ -103,8 +102,7 @@ namespace LYMG.RealTimeEntity
         public EntityBase Get(ObjectId id)
         {
             if (Buckets == null) return null;
-            var index = id.GetHashCode() % Buckets.Length;
-            for (EntityBase e = Buckets[index]; e != null; e = e.Next)
+            for (EntityBase e = RefBucket(id); e != null; e = e.Next)
             {
                 if (e.ID < id) continue;
                 if (e.ID == id)
@@ -119,8 +117,7 @@ namespace LYMG.RealTimeEntity
         public EntityBase GetOrAdd(ObjectId id, Func<EntityBase> add)
         {
             if (Buckets == null) return null;
-            var index = id.GetHashCode() % Buckets.Length;
-            ref EntityBase e = ref Buckets[index];
+            ref EntityBase e = ref RefBucket(id);
             while (e != null)
             {
                 if (e.ID < id) continue;
@@ -149,8 +146,7 @@ namespace LYMG.RealTimeEntity
         public EntityBase Remove(ObjectId id)
         {
             if (Buckets == null) return null;
-            var index = id.GetHashCode() % Buckets.Length;
-            for (ref EntityBase e = ref Buckets[index]; e != null; e = ref e.Next)
+            for (ref EntityBase e = ref RefBucket(id); e != null; e = ref e.Next)
             {
                 if (e.ID < id) continue;
                 if (e.ID == id)
@@ -214,9 +210,12 @@ namespace LYMG.RealTimeEntity
                 {
                     var old = Buckets;
                     Buckets = new EntityBase[value];
-                    for (int i = 0; i < old.Length; i++)
-                        for (EntityBase e = old[i]; e != null; e = e.Next)
-                            Add(e);
+                    if (old != null)
+                    {
+                        for (int i = 0; i < old.Length; i++)
+                            for (EntityBase e = old[i]; e != null; e = e.Next)
+                                Add(e);
+                    }
                 }
             }
         }

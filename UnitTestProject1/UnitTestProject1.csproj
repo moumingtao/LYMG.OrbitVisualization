@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LYMG.GeoResources\LYMG.GeoResources.csproj" />
+    <ProjectReference Include="..\LYMG.RealTimeEntity\LYMG.RealTimeEntity.csproj" />
   </ItemGroup>
 
 </Project>
