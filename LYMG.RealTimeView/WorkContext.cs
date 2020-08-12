@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace LYMG.RealTimeEntity
+namespace LYMG.RealTimeView
 {
     public class WorkContext
     {

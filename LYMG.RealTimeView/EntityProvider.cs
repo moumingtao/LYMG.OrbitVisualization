@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LYMG.RealTimeEntity
+namespace LYMG.RealTimeView
 {
     public class EntityProvider<T> where T : EntityBase
     {

@@ -1,10 +1,8 @@
-﻿using LYMG.RealTimeEntity;
+﻿using LYMG.RealTimeView;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MongoDB.Bson;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace UnitTestProject1
 {
@@ -78,7 +76,5 @@ namespace UnitTestProject1
             }
             stopwatch.Stop();
         }
-
-        EntityBase CreateEntity() => new EntityBase { ID = ObjectId.GenerateNewId() };
     }
 }
