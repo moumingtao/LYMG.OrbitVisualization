@@ -1,0 +1,1 @@
+﻿卫星以SatelliteName作为逻辑标识，卫星相关的各个表通过SatelliteName关联
