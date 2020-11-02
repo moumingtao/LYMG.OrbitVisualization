@@ -10,6 +10,7 @@
         mounted() {
             var viewer = this.cesiumVue.viewer;
             viewer._cesiumWidget._creditContainer.style.display = "none";
+            viewer.imageryLayers.removeAll();
             viewer.imageryLayers.addImageryProvider(
                 new Cesium.UrlTemplateImageryProvider({
                     url: "https://localhost:44389/tile/googleTiles?x={x}&y={y}&z={z}"

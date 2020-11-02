@@ -19,3 +19,13 @@
         </el-table>
     </el-popover>
 </template>
+<script>
+export default {
+    data(){
+        return {
+            tableData:[],
+            search:""
+        }
+    }
+}
+</script>
