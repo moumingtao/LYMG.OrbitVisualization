@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="TileDownload\Storages\" />
+    <Compile Remove="TileDownload\Storages\**" />
+    <EmbeddedResource Remove="TileDownload\Storages\**" />
+    <None Remove="TileDownload\Storages\**" />
   </ItemGroup>
 
   <ItemGroup>

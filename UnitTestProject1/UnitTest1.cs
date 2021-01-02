@@ -32,7 +32,6 @@ namespace UnitTestProject1
             provider.Storage = db.GetCollection<BsonDocument>("googleTiles", new MongoCollectionSettings { AssignIdOnInsert = false });
             if (!db.ListCollectionNames().ToEnumerable().Contains("googleTiles"))
             {
-                var opt = new CreateCollectionOptions();
                 db.CreateCollection("googleTiles");
                 var ikd = Builders<BsonDocument>.IndexKeys.Ascending("x").Ascending("y").Ascending("z");
                 provider.Storage.Indexes.CreateOne(new CreateIndexModel<BsonDocument>(ikd));
